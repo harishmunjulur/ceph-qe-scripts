@@ -22,7 +22,7 @@ overrides:
   ansible.cephlab:
   #   branch: wip-vaultpass
       #tags: zap,entitlements,epel,hostname,lvm,partition,secondary-nic
-      tags: zap,epel,hostname,lvm,partition,secondary-nic,packages
+      tags: zap,epel,hostname,lvm,partition,secondary-nic,packages,repos
   install:
    ceph:
     log-whitelist:
