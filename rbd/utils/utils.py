@@ -1,4 +1,4 @@
-import log
+import logging as log 
 import shlex
 import random
 import string
