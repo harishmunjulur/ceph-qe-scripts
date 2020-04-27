@@ -37,13 +37,13 @@ class RbdUtils:
             else:
                 raise Exception("error: %s \nreturncode: %s" % (err, pr.returncode))
 
-        except Exception, e:
+        except Exception as e:
             log.error('cmd execution failed')
             log.error(e)
             return False
 
     def random_string(self, length=8, prefix='', suffix=''):
-        self.temp_str = prefix + ''.join([random.choice(string.ascii_letters) for _ in xrange(length)]) + suffix
+        self.temp_str = prefix + ''.join([random.choice(string.ascii_letters) for _ in range(length)]) + suffix
         return self.temp_str
 
     def create_pool(self, **kw):
