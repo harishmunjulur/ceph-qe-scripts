@@ -11,6 +11,7 @@ class RbdUtils:
 
     def get_ceph_version(self):
         self.output = self.exec_cmd('ceph -v')
+        print(self.output)
         self.output = int('.'.join(self.output.split()[2].split('.')[:1]))
         if self.output == 10:
             return 2
