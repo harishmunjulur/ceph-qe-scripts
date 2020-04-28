@@ -113,12 +113,12 @@ class CliParams(object):
         for param in list:
             globals()[param] = globals()['{}_v{}'.format(param,
                                                          self.ceph_version)]
-        for iterator in xrange(0, num_rep_pool):
+        for iterator in range(0, num_rep_pool):
             globals()['rep_pool']['val']['pool'+str(iterator)] = self.rbd.random_string(length=5,prefix='rep_')
 
         if self.ceph_version > 2 and k_m:
             self.rbd.set_ec_profile(k=k_m[0],m=k_m[2],profile=self.ec_profile)
-            for iterator in xrange(0, num_data_pool):
+            for iterator in range(0, num_data_pool):
                 globals()['data_pool']['val']['pool'+str(iterator)] = self.rbd.random_string(length=5,prefix='data_')
 
             [self.rbd.create_pool(poolname=val) for key, val in rep_pool['val'].iteritems()]
@@ -126,7 +126,7 @@ class CliParams(object):
 
         else:
             globals()['data_pool']['arg'] = ''
-            for iterator in xrange(0, num_rep_pool):
+            for iterator in range(0, num_rep_pool):
                 globals()['data_pool']['val']['pool'+str(iterator)] = ''
             [self.rbd.create_pool(poolname=val) for key, val in rep_pool['val'].iteritems()]
 
@@ -162,7 +162,7 @@ class CliParams(object):
                 if key:
                     if type(val) is list:
                         string = ''
-                        for x in xrange(0, len(val)):
+                        for x in range(0, len(val)):
                             string = string + globals()[param]['arg'][x] \
                                   + ' ' + val[x] + ' '
                         param_list.append(string)
@@ -175,7 +175,7 @@ class CliParams(object):
         # Generate and store all combinations of parameters in str type
         for param_list in itertools.product(*param_list_all):
             str = ''
-            for index in xrange(0, len(param_list)):
+            for index in range(0, len(param_list)):
                 str = str + ' ' + param_list[index]
                 combined_param_list.append(str)
 
