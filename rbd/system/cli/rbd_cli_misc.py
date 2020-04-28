@@ -35,6 +35,7 @@ if __name__ == "__main__":
                           .find('G') != -1,
                           combinations)
     combinations = list(combinations)
+    print(combinations)
     [exec_cmd('rbd create {} {} {}/img{}'.format(combinations[0], parameters.data_pool['arg'] +
                                                  ' ' + parameters.data_pool['val']['pool0'],
                                                  parameters.rep_pool['val']['pool0'], iterator))
