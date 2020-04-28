@@ -57,9 +57,10 @@ if __name__ == "__main__":
      for iterator, param in enumerate(combinations, start=0)]
 
     # Snap Creation
+    l = list(combinations)
     [exec_cmd('rbd snap create {}/img{num}@snapimg{num}'
               .format(parameters.rep_pool['val']['pool0'], num=iterator))
-     for iterator in range(0, len(combinations))]
+     for iterator in range(0, len(l))]
 
     # Export
     iterator3 = 0
