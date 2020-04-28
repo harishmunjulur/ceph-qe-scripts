@@ -11,12 +11,13 @@ class RbdUtils:
 
     def get_ceph_version(self):
         self.output = self.exec_cmd('ceph -v')
-        print(self.output)
         self.output = int('.'.join(self.output.split()[2].split('.')[:1]))
         if self.output == 10:
             return 2
         elif self.output == 12:
             return 3
+        elif self.output == 14:
+            return 4
 
     def exec_cmd(self, cmd):
 
@@ -32,8 +33,8 @@ class RbdUtils:
             if pr.returncode == 0:
                 log.info('cmd executed')
                 if out or err:
-                    log.info('output:' + out + err)
-                return out
+                    log.info('output:' + out.decode(encoding="utf-8") + err.decode(encoding="utf-8"))
+                return out.decode(encoding="utf-8")
 
             else:
                 raise Exception("error: %s \nreturncode: %s" % (err, pr.returncode))
