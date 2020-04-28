@@ -121,14 +121,14 @@ class CliParams(object):
             for iterator in range(0, num_data_pool):
                 globals()['data_pool']['val']['pool'+str(iterator)] = self.rbd.random_string(length=5,prefix='data_')
 
-            [self.rbd.create_pool(poolname=val) for key, val in rep_pool['val'].iteritems()]
-            [self.rbd.create_ecpool(poolname=val, profile=self.ec_profile) for key, val in data_pool['val'].iteritems() if val!=None]
+            [self.rbd.create_pool(poolname=val) for key, val in rep_pool['val'].items()]
+            [self.rbd.create_ecpool(poolname=val, profile=self.ec_profile) for key, val in data_pool['val'].items() if val!=None]
 
         else:
             globals()['data_pool']['arg'] = ''
             for iterator in range(0, num_rep_pool):
                 globals()['data_pool']['val']['pool'+str(iterator)] = ''
-            [self.rbd.create_pool(poolname=val) for key, val in rep_pool['val'].iteritems()]
+            [self.rbd.create_pool(poolname=val) for key, val in rep_pool['val'].items()]
 
     def search_param_val(self, param_arg, str_to_search):
             if str_to_search.find(param_arg) != -1:
@@ -158,7 +158,7 @@ class CliParams(object):
             param_list = []
 
             # Generate values for one parameter
-            for key, val in globals()[param]['val'].iteritems():
+            for key, val in globals()[param]['val'].items():
                 if key:
                     if type(val) is list:
                         string = ''
