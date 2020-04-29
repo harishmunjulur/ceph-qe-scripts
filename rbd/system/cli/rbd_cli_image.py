@@ -41,7 +41,7 @@ if __name__ == "__main__":
     combinations = cli.generate_combinations('image_size', 'object_size',
                                              'stripe', 'image_feature',
                                              'image_shared')
-
+'''
     if cli.ceph_version == 2:
         invalid = [val for val in combinations if
                    (cli.search_param_val('--image-feature', val) != 0 and
@@ -54,7 +54,7 @@ if __name__ == "__main__":
         (cli.get_byte_size(cli.search_param_val('--stripe-unit', val)) <=
          cli.get_byte_size(cli.search_param_val('--object-size', val))),
         combinations)
-    [exec_cmd('rbd create {} {} {}/img{}'.format(param, parameters.data_pool['arg'] +
+   [exec_cmd('rbd create {} {} {}/img{}'.format(param, parameters.data_pool['arg'] +
                                                  ' ' + parameters.data_pool['val']['pool0'],
                                                  parameters.rep_pool['val']['pool0'],
                                                  iterator))                                             
@@ -130,7 +130,7 @@ if __name__ == "__main__":
 
     # Image Status
     exec_cmd('rbd status {}/img{}'.format(parameters.rep_pool['val']['pool0'], iterator))
-
+'''
     if cli.ceph_version > 2:
         # Moving Image to trash
         [exec_cmd('rbd trash mv {}/img{}'.format(parameters.rep_pool['val']['pool0'],
