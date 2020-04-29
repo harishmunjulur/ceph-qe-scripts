@@ -28,6 +28,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     k_m = args.ec_pool_k_m
     cli = parameters.CliParams(k_m=k_m, num_rep_pool=2, num_data_pool=2 if k_m else 0)
+    index = 0
+    iterator = 0
 
     # Simple Image Creation
     combinations = cli.generate_combinations('image_size', 'image_format')
@@ -41,7 +43,7 @@ if __name__ == "__main__":
     combinations = cli.generate_combinations('image_size', 'object_size',
                                              'stripe', 'image_feature',
                                              'image_shared')
-'''
+
     if cli.ceph_version == 2:
         invalid = [val for val in combinations if
                    (cli.search_param_val('--image-feature', val) != 0 and
@@ -130,7 +132,7 @@ if __name__ == "__main__":
 
     # Image Status
     exec_cmd('rbd status {}/img{}'.format(parameters.rep_pool['val']['pool0'], iterator))
-'''
+
     if cli.ceph_version > 2:
         # Moving Image to trash
         [exec_cmd('rbd trash mv {}/img{}'.format(parameters.rep_pool['val']['pool0'],

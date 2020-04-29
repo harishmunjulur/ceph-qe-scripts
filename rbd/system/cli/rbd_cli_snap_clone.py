@@ -37,7 +37,7 @@ if __name__ == "__main__":
     [exec_cmd('rbd create {} {} {}/img{}'
               .format(combinations[0], parameters.data_pool['arg'] + ' ' + parameters.data_pool['val']['pool0'],
                       parameters.rep_pool['val']['pool0'], iterator))
-     for iterator in range(0, 2)]
+     for iterator in range(0, 1)]
 
     # Snap Creation
     [exec_cmd('rbd snap create {}/img{}@snapimg{}'
