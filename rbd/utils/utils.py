@@ -61,7 +61,7 @@ class RbdUtils:
     def clean_up(self, **kw):
         # Pools deletion
         if kw.get('pools'):
-            [self.delete_pool(poolname=val) for key, val in kw.get('pools').iteritems() if val is not None]
+            [self.delete_pool(poolname=val) for key, val in kw.get('pools').items() if val is not None]
 
         # ec profile removal
         if kw.get('profile'):
