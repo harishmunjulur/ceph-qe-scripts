@@ -181,6 +181,6 @@ class CliParams(object):
         # Remove Extra Spaces
         combined_param_list = [val.strip() for val in combined_param_list]
 
-        combined_param_list = self.remove_duplicates(combined_param_list)
+        combined_param_list = list(set(combined_param_list))
 
         return combined_param_list
