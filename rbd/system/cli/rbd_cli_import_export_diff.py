@@ -197,7 +197,7 @@ if __name__ == "__main__":
 
     if FAILED_COUNT > 0:
         [log.info(fc) for fc in FAILED_COMMANDS]
-        [log.info(fc) for fc in PASSED_COMMANDS]
+        #[log.info(fc) for fc in PASSED_COMMANDS]
         exit(1)
 
     exit(0)

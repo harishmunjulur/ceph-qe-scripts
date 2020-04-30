@@ -56,11 +56,7 @@ if __name__ == "__main__":
         (cli.get_byte_size(cli.search_param_val('--stripe-unit', val)) <=
          cli.get_byte_size(cli.search_param_val('--object-size', val))),
         combinations)
-   [exec_cmd('rbd create {} {} {}/img{}'.format(param, parameters.data_pool['arg'] +
-                                                ' ' + parameters.data_pool['val']['pool0'],
-                                                parameters.rep_pool['val']['pool0'],
-                                                iterator))                                             
-    for iterator, param in enumerate(combinations, start=iterator + 1)]
+   [exec_cmd('rbd create {} {} {}/img{}'.format(param, parameters.data_pool['arg'] + ' ' + parameters.data_pool['val']['pool0'], parameters.rep_pool['val']['pool0'], iterator)) for iterator, param in enumerate(combinations, start=iterator + 1)]
 
     # Feature Disable & Enable and Object-map rebuild
     image_feature = ['layering', 'striping', 'fast-diff', 'object-map',

@@ -82,7 +82,7 @@ if __name__ == "__main__":
                          .format(parameters.rep_pool['val']['pool0'], iterator)))
             [exec_cmd('rbd lock remove {}/img{} {} {}'.
              format(parameters.rep_pool['val']['pool0'], iterator, key, val['locker']))
-             for key, val in json_output.iteritems()]
+             for key, val in json_output.items()]
 
     # Mapping Images to block-device
     iterator += 1

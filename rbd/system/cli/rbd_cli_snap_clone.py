@@ -54,7 +54,7 @@ if __name__ == "__main__":
 
     # Listing Images and Snapshots In the Pool
     [exec_cmd('rbd ls -l {}'.format(parameters.rep_pool['val'][key]))
-     for key, val in parameters.rep_pool['val'].iteritems()]
+     for key, val in parameters.rep_pool['val'].items()]
 
     # Listing Snap of Images
     exec_cmd('rbd snap ls {}/img{}'.format(parameters.rep_pool['val']['pool0'], iterator))
