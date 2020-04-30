@@ -8,7 +8,7 @@ import utils.log as log
 FAILED_COUNT = 0
 PASSED_COUNT = 0
 FAILED_COMMANDS = []
-
+PASSED_COMMANDS = []
 
 def exec_cmd(args):
     rc = cli.rbd.exec_cmd(args)
@@ -17,6 +17,7 @@ def exec_cmd(args):
         FAILED_COMMANDS.append(args)
     else:
         globals()['PASSED_COUNT'] += 1
+        PASSED_COMMANDS.append(args)
     return rc
 
 
@@ -196,6 +197,7 @@ if __name__ == "__main__":
 
     if FAILED_COUNT > 0:
         [log.info(fc) for fc in FAILED_COMMANDS]
+        [log.info(fc) for fc in PASSED_COMMANDS]
         exit(1)
 
     exit(0)
