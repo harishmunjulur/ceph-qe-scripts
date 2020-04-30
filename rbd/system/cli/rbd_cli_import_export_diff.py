@@ -32,6 +32,7 @@ if __name__ == "__main__":
     path_list = ['/tmp/{}'.format(cli.rbd.random_string()),
                  '/tmp/{}'.format(cli.rbd.random_string()),
                  '/tmp/{}'.format(cli.rbd.random_string())]
+    log.info(path_list)
 
     # Creation of Directories
     [exec_cmd('mkdir {}'.format(path)) for path in path_list]
@@ -59,6 +60,7 @@ if __name__ == "__main__":
 
     # Snap Creation
     l = list(combinations)
+    log.info(combinations)
     [exec_cmd('rbd snap create {}/img{num}@snapimg{num}'
               .format(parameters.rep_pool['val']['pool0'], num=iterator))
      for iterator in range(0, len(l))]
@@ -108,6 +110,7 @@ if __name__ == "__main__":
     # Export-diff
     iterator = iterator2 = 0
     combinations = cli.generate_combinations('whole_object')
+    log.info(combinations)
     for iterator2, param in enumerate(combinations, start=0):
         exec_cmd('rbd export-diff {} {}/img{num} {}/img{num}'
                  .format(param, parameters.rep_pool['val']['pool0'], path_list[1], num=iterator))

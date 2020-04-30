@@ -3,7 +3,6 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(__file__, "../../..")))
 import itertools
 import utils.utils as utils
-import utils.log as log
 
 rep_pool = {'arg': '-p', 'val': {}}
 
@@ -183,6 +182,5 @@ class CliParams(object):
         combined_param_list = [val.strip() for val in combined_param_list]
 
         combined_param_list = self.remove_duplicates(combined_param_list)
-        log.info(combined_param_list)
 
         return combined_param_list
