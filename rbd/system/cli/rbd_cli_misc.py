@@ -28,6 +28,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     k_m = args.ec_pool_k_m
     cli = parameters.CliParams(k_m=k_m, num_rep_pool=1, num_data_pool=1 if k_m else 0)
+    iterator = 0
 
     # Simple Image Creation
     combinations = cli.generate_combinations('image_size')
