@@ -32,12 +32,15 @@ if __name__ == "__main__":
     path_list = ['/tmp/{}'.format(cli.rbd.random_string()),
                  '/tmp/{}'.format(cli.rbd.random_string()),
                  '/tmp/{}'.format(cli.rbd.random_string())]
-    log.info(path_list)
 
     # Creation of Directories
-    [exec_cmd('mkdir {}'.format(path)) for path in path_list]
+    log.info("Creation of Directories")
+    for path in path_list:
+        exec_cmd('mkdir {}'.format(path))
+        log.info("'mkdir {}'.format(path)")
 
     # Simple Image Creation
+    log.info("Simple Image Creation")
     combinations = cli.generate_combinations('image_size', 'object_size',
                                              'image_format')
     if k_m:
@@ -53,17 +56,17 @@ if __name__ == "__main__":
                           cli.search_param_val('--object-size', val) != 0 and
                           cli.search_param_val('--object-size', val).find('B') != -1,
                           combinations)
-    [exec_cmd('rbd create {} {}/img{}'.format(param,
-                                              parameters.rep_pool['val']['pool0'],
-                                              iterator))
-     for iterator, param in enumerate(combinations, start=0)]
+
+    for iterator, param in enumerate(combinations, start=0):
+        exec_cmd('rbd create {} {}/img{}'.format(param, parameters.rep_pool['val']['pool0'], iterator))
+        log.info('rbd create {} {}/img{}'.format(param, parameters.rep_pool['val']['pool0'], iterator))
 
     # Snap Creation
     l = list(combinations)
-    log.info(combinations)
-    [exec_cmd('rbd snap create {}/img{num}@snapimg{num}'
-              .format(parameters.rep_pool['val']['pool0'], num=iterator))
-     for iterator in range(0, len(l))]
+    for iterator in range(0, len(l)):
+        exec_cmd('rbd snap create {}/img{num}@snapimg{num}'.format(parameters.rep_pool['val']['pool0'], num=iterator))
+        log.info('rbd snap create {}/img{num}@snapimg{num}'.format(parameters.rep_pool['val']['pool0'], num=iterator))
+     
 
     # Export
     iterator3 = 0
@@ -73,14 +76,21 @@ if __name__ == "__main__":
             exec_cmd('rbd export {} {}/img{num} {}/img{num}'
                      .format(param, parameters.rep_pool['val']['pool0'],
                              path_list[0], num=iterator2))
-
+            log.info('rbd export {} {}/img{num} {}/img{num}'
+                     .format(param, parameters.rep_pool['val']['pool0'],
+                             path_list[0], num=iterator2))
             exec_cmd('rbd export {} {}/img{num}@snapimg{num} {}/img{num}@snapimg{num}'
                      .format(param, parameters.rep_pool['val']['pool0'],
                              path_list[0], num=iterator2))
-
+            log.info('rbd export {} {}/img{num}@snapimg{num} {}/img{num}@snapimg{num}'
+                     .format(param, parameters.rep_pool['val']['pool0'],
+                             path_list[0], num=iterator2))
             if cli.ceph_version > 2 and not (iterator3 == len(combinations) - 1 and iterator2 == iterator):
                 exec_cmd('rm {}/img{}'.format(path_list[0], iterator2))
+                log.info('rm {}/img{}'.format(path_list[0], iterator2))
                 exec_cmd('rm {}/img{num}@snapimg{num}'.format(path_list[0],
+                                                              num=iterator2))
+                log.info('rm {}/img{num}@snapimg{num}'.format(path_list[0],
                                                               num=iterator2))
 
     # Import
@@ -101,11 +111,10 @@ if __name__ == "__main__":
                           (cli.get_byte_size(cli.search_param_val('--stripe-unit', val)) <=
                            cli.get_byte_size(cli.search_param_val('--object-size', val)))),
                           combinations)
-    [exec_cmd('rbd import {} {}/img{} {} {}/imgimport{}'
-              .format(param, path_list[0], iterator,
-                      parameters.data_pool['arg'] + ' ' + parameters.data_pool['val']['pool0'],
-                      parameters.rep_pool['val']['pool0'], iterator3))
-     for iterator3, param in enumerate(combinations, start=0)]
+    for iterator3, param in enumerate(combinations, start=0):
+        exec_cmd('rbd import {} {}/img{} {} {}/imgimport{}'.format(param, path_list[0], iterator,parameters.data_pool['arg'] + ' ' + parameters.data_pool['val']['pool0'],parameters.rep_pool['val']['pool0'], iterator3))
+        log.info('rbd import {} {}/img{} {} {}/imgimport{}'.format(param, path_list[0], iterator,parameters.data_pool['arg'] + ' ' + parameters.data_pool['val']['pool0'],parameters.rep_pool['val']['pool0'], iterator3))
+  
 
     # Export-diff
     iterator = iterator2 = 0
@@ -114,32 +123,50 @@ if __name__ == "__main__":
     for iterator2, param in enumerate(combinations, start=0):
         exec_cmd('rbd export-diff {} {}/img{num} {}/img{num}'
                  .format(param, parameters.rep_pool['val']['pool0'], path_list[1], num=iterator))
+        log.info('rbd export-diff {} {}/img{num} {}/img{num}'
+                 .format(param, parameters.rep_pool['val']['pool0'], path_list[1], num=iterator))
         exec_cmd(
+            'rbd export-diff --from-snap snapimg{num} {} {}/img{num} {}/img{num}'
+            .format(param, parameters.rep_pool['val']['pool0'], path_list[2], num=iterator))
+        log.info(
             'rbd export-diff --from-snap snapimg{num} {} {}/img{num} {}/img{num}'
             .format(param, parameters.rep_pool['val']['pool0'], path_list[2], num=iterator))
         exec_cmd(
             'rbd export-diff {} {}/img{num}@snapimg{num} {}/img{num}@snapimg{num}'
-            .format(param, parameters.rep_pool['val']['pool0'], path_list[1], num=iterator)),
-
+            .format(param, parameters.rep_pool['val']['pool0'], path_list[1], num=iterator))
+        log.info(
+            'rbd export-diff {} {}/img{num}@snapimg{num} {}/img{num}@snapimg{num}'
+            .format(param, parameters.rep_pool['val']['pool0'], path_list[1], num=iterator))
         exec_cmd(
             'rbd export-diff --from-snap snapimg{num} {} {}/img{num}@snapimg{num} {}/img{num}@snapimg{num}'
             .format(param, parameters.rep_pool['val']['pool0'], path_list[2], num=iterator))
+        log.info(
+            'rbd export-diff --from-snap snapimg{num} {} {}/img{num}@snapimg{num} {}/img{num}@snapimg{num}'
+            .format(param, parameters.rep_pool['val']['pool0'], path_list[2], num=iterator))
+
 
         if iterator2 == 0:
             for path in path_list[1:]:
                 exec_cmd('rm {}/img{}'.format(path, iterator))
+                log.info('rm {}/img{}'.format(path, iterator))
                 exec_cmd('rm {}/img{num}@snapimg{num}'
+                         .format(path, num=iterator))
+                log.info('rm {}/img{num}@snapimg{num}'
                          .format(path, num=iterator))
 
     exec_cmd('rbd export-diff {}/img{num} {}/imgex{num}'
              .format(parameters.rep_pool['val']['pool0'], path_list[1], num=iterator))
-
+    log.info('rbd export-diff {}/img{num} {}/imgex{num}'
+             .format(parameters.rep_pool['val']['pool0'], path_list[1], num=iterator))
     # Merge-diff
     exec_cmd('rbd merge-diff {path}/img{num} {path}/imgex{num} {}/merge-diff-img{num}'
              .format(path_list[0], path=path_list[1], num=iterator))
-
+    log.info('rbd merge-diff {path}/img{num} {path}/imgex{num} {}/merge-diff-img{num}'
+             .format(path_list[0], path=path_list[1], num=iterator))
     # Import-diff
     exec_cmd('rbd import-diff {}/img{num} {}/img{num}'
+             .format(path_list[1], parameters.rep_pool['val']['pool0'], num=iterator))
+    log.info('rbd import-diff {}/img{num} {}/img{num}'
              .format(path_list[1], parameters.rep_pool['val']['pool0'], num=iterator))
 
     # diff
