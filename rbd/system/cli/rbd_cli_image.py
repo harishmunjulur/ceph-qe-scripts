@@ -124,7 +124,7 @@ if __name__ == "__main__":
 
     # Listing Images In the Pool
     [exec_cmd('rbd ls -l {}'.format(parameters.rep_pool['val'][key]))
-     for key, val in parameters.rep_pool['val'].iteritems()]
+     for key, val in parameters.rep_pool['val'].items()]
 
     # Image Info
     exec_cmd('rbd info {}/img{}'.format(parameters.rep_pool['val']['pool0'], iterator))
