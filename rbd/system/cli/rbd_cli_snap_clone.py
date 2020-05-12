@@ -110,7 +110,12 @@ if __name__ == "__main__":
             tmp_list.append(' --image-feature layering')
             rem_list.append(val)
             add_list.append(''.join(tmp_list))
-
+    log.info('rem_list =')
+    for rem1 in rem_list:
+        log.info(rem1)
+    log.info('add_list =')
+    for add1 in add_list:
+        log.info(add1)
     map(lambda val: combinations.remove(val), rem_list)
     map(lambda val: combinations.append(val), add_list)
     log.info('final combintions after filtering')
