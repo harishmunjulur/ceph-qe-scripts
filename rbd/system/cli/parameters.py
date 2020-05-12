@@ -3,6 +3,7 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(__file__, "../../..")))
 import itertools
 import utils.utils as utils
+import utils.log as log
 
 rep_pool = {'arg': '-p', 'val': {}}
 
@@ -183,5 +184,5 @@ class CliParams(object):
 
         combined_param_list = list(set(combined_param_list))
         for param_list1 in combined_param_list:
-          log.info(param_list1)
+            log.info(param_list1)
         return combined_param_list
