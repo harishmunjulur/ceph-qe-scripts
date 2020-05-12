@@ -182,5 +182,6 @@ class CliParams(object):
         combined_param_list = [val.strip() for val in combined_param_list]
 
         combined_param_list = list(set(combined_param_list))
-
+        for param_list1 in combined_param_list:
+          log.info(param_list1)
         return combined_param_list
