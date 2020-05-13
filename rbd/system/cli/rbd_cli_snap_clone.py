@@ -116,13 +116,17 @@ if __name__ == "__main__":
     log.info('add_list =')
     for add1 in add_list:
         log.info(add1)
-    map(lambda val: combinations.remove(val), rem_list)
-    map(lambda val: combinations.append(val), add_list)
+    for val in rem_list:
+        combinations.remove(val)
+    for val in add_list:
+        combinations.append(val)
+    #map(lambda val: combinations.remove(val), rem_list)
+    #map(lambda val: combinations.append(val), add_list)
     log.info('final combintions after filtering')
     for i in combinations:
         log.info(i)
+    log.info('iterator3 value is {}'.format(iterator3))
     for iterator3, param in enumerate(combinations, start=0):
-        log.info('iterator3 value is {}'.format(iterator3))
         if iterator3 == 4:
             iterator += 1
         exec_cmd('rbd clone {} {pool}/img{}@snapimg{} {} {pool}/cloneimg{}'
