@@ -95,6 +95,7 @@ if __name__ == "__main__":
                           combinations)
     rem_list = []
     add_list = []
+    combinations = list(combinations)
     for val in combinations:
         if cli.search_param_val('--image-feature', val) != 0 and \
                 cli.search_param_val('--image-feature',
