@@ -13,9 +13,6 @@ PASSED_COMMANDS = []
 
 def exec_cmd(args):
     rc = cli.rbd.exec_cmd(args)
-    log.info('start of command')
-    log.info(args)
-    log.info('end of command')
     if rc is False:
         globals()['FAILED_COUNT'] += 1
         FAILED_COMMANDS.append(args)
@@ -111,22 +108,12 @@ if __name__ == "__main__":
             tmp_list.append(' --image-feature layering')
             rem_list.append(val)
             add_list.append(''.join(tmp_list))
-    log.info('rem_list =')
-    for rem1 in rem_list:
-        log.info(rem1)
-    log.info('add_list =')
-    for add1 in add_list:
-        log.info(add1)
+ 
     for val in rem_list:
         combinations.remove(val)
     for val in add_list:
         combinations.append(val)
-    #map(lambda val: combinations.remove(val), rem_list)
-    #map(lambda val: combinations.append(val), add_list)
-    log.info('final combintions after filtering')
-    for i in combinations:
-        log.info(i)
-    log.info('iterator3 value is {}'.format(iterator3))
+
     for iterator3, param in enumerate(combinations, start=0):
         if iterator3 == 4:
             iterator += 1
