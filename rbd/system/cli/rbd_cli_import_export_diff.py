@@ -76,10 +76,12 @@ if __name__ == "__main__":
         for iterator3, param in enumerate(combinations, start=0):
             exec_cmd('rbd export {} {}/img{num} {}/img{num}'
                      .format(param, parameters.rep_pool['val']['pool0'],
-                             path_list[0], num=iterator2)
+                             path_list[0], num=iterator2))
+            
             exec_cmd('rbd export {} {}/img{num}@snapimg{num} {}/img{num}@snapimg{num}'
                      .format(param, parameters.rep_pool['val']['pool0'],
                              path_list[0], num=iterator2))
+            
             if cli.ceph_version > 2 and not (iterator3 == len(combinations) - 1 and iterator2 == iterator):
                 exec_cmd('rm {}/img{}'.format(path_list[0], iterator2))
                 exec_cmd('rm {}/img{num}@snapimg{num}'.format(path_list[0],
