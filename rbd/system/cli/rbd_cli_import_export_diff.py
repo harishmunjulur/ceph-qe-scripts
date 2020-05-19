@@ -105,10 +105,10 @@ if __name__ == "__main__":
                           (cli.get_byte_size(cli.search_param_val('--stripe-unit', val)) <=
                            cli.get_byte_size(cli.search_param_val('--object-size', val)))),
                           combinations)
-    combinations = list(combinations)                 
+    #combinations = list(combinations)                 
     for iterator3, param in enumerate(combinations, start=0):
         exec_cmd('rbd import {} {}/img{} {} {}/imgimport{}'.format(param, path_list[0], iterator,parameters.data_pool['arg'] + ' ' + parameters.data_pool['val']['pool0'],parameters.rep_pool['val']['pool0'], iterator3))
-        log.info('rbd import {} {}/img{} {} {}/imgimport{}'.format(param, path_list[0], iterator,parameters.data_pool['arg'] + ' ' + parameters.data_pool['val']['pool0'],parameters.rep_pool['val']['pool0'], iterator3))
+        #log.info('rbd import {} {}/img{} {} {}/imgimport{}'.format(param, path_list[0], iterator,parameters.data_pool['arg'] + ' ' + parameters.data_pool['val']['pool0'],parameters.rep_pool['val']['pool0'], iterator3))
   
 
     # Export-diff
