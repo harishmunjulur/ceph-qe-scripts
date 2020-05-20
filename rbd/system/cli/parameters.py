@@ -68,38 +68,23 @@ stripe_v2 = {'arg': ['--stripe-unit', '--stripe-count'],
                      'size_KB': ['65536', '16'],
                      'size_MB': ['16777216', '16']}}
 
-stripe_v3 = {'arg': ['--stripe-unit', '--stripe-count'],
-             'val': {None: [None, None],
-                     'size_B': ['2048B', '16'],
-                     'size_KB': ['64K', '16'],
-                     'size_MB': ['16M', '16']}}
-
-stripe_v4 = {'arg': ['--stripe-unit', '--stripe-count'],
-             'val': {None: [None, None],
-                     'size_B': ['2048B', '16'],
-                     'size_KB': ['64K', '16'],
-                     'size_MB': ['16M', '16']}}
+stripe_v3 = stripe_v4 = {'arg': ['--stripe-unit', '--stripe-count'],
+                         'val': {None: [None, None],
+                                 'size_B': ['2048B', '16'],
+                                 'size_KB': ['64K', '16'],
+                                 'size_MB': ['16M', '16']}}
              
 io_type_v2 = {'arg': '', 'val': {'write': 'write'}}
 
-io_type_v3 = {'arg': ' --io-type', 'val': {'read': 'read',
-                                           'write': 'write'}}
-
-io_type_v4 = {'arg': ' --io-type', 'val': {'read': 'read',
-                                           'write': 'write'}}
-
+io_type_v3 = io_type_v4 = {'arg': ' --io-type', 'val': {'read': 'read',
+                                                        'write': 'write'}}
 
 export_format_v2 = {'arg': None, 'val': {None: None}}
 
-export_format_v3 = {'arg': '--export-format',
-                    'val': {None: None,
-                            'export-format 1': '1',
-                            'export-format 2': '2'}}
-
-export_format_v4 = {'arg': '--export-format',
-                    'val': {None: None,
-                            'export-format 1': '1',
-                            'export-format 2': '2'}}
+export_format_v3 = export_format_v4 = {'arg': '--export-format',
+                                       'val': {None: None,
+                                               'export-format 1': '1',
+                                               'export-format 2': '2'}}
 
 class CliParams(object):
 
