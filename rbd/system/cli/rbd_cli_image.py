@@ -33,6 +33,7 @@ if __name__ == "__main__":
     combinations = cli.generate_combinations('image_size', 'image_format')
     combinations = filter(lambda val: cli.search_param_val('-s', val)
                           .find('M') != -1, combinations)
+    combinations = list(combinations)
     [exec_cmd('rbd create {} {}/img{}'.format(param, parameters.rep_pool['val']['pool0'],
                                               iterator))
      for iterator, param in enumerate(combinations, start=0)]
