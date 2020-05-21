@@ -28,8 +28,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
     k_m = args.ec_pool_k_m
     cli = parameters.CliParams(k_m=k_m, num_rep_pool=2, num_data_pool=2 if k_m else 0)
-    index = 0
-    iterator = 0
 
     # Simple Image Creation
     combinations = cli.generate_combinations('image_size', 'image_format')
@@ -56,11 +54,13 @@ if __name__ == "__main__":
         (cli.get_byte_size(cli.search_param_val('--stripe-unit', val)) <=
          cli.get_byte_size(cli.search_param_val('--object-size', val))),
         combinations)
+    combinations = list(combinations)
     [exec_cmd('rbd create {} {} {}/img{}'.format(param, parameters.data_pool['arg'] +
                                                  ' ' + parameters.data_pool['val']['pool0'],
                                                  parameters.rep_pool['val']['pool0'],
                                                  iterator))
      for iterator, param in enumerate(combinations, start=iterator + 1)]
+
     # Feature Disable & Enable and Object-map rebuild
     image_feature = ['layering', 'striping', 'fast-diff', 'object-map',
                      'deep-flatten', 'journaling', 'exclusive-lock']
@@ -124,7 +124,7 @@ if __name__ == "__main__":
 
     # Listing Images In the Pool
     [exec_cmd('rbd ls -l {}'.format(parameters.rep_pool['val'][key]))
-     for key, val in parameters.rep_pool['val'].items()]
+     for key, val in parameters.rep_pool['val'].iteritems()]
 
     # Image Info
     exec_cmd('rbd info {}/img{}'.format(parameters.rep_pool['val']['pool0'], iterator))
