@@ -12,6 +12,8 @@ FAILED_COMMANDS = []
 
 
 def exec_cmd(args):
+    log.info('hary1')
+    log.info(args)
     rc = cli.rbd.exec_cmd(args)
     if rc is False:
         globals()['FAILED_COUNT'] += 1
@@ -56,6 +58,7 @@ if __name__ == "__main__":
          cli.get_byte_size(cli.search_param_val('--object-size', val))),
         combinations)
     combinations = list(combinations)
+    iterator = 0
     [exec_cmd('rbd create {} {} {}/img{}'.format(param, parameters.data_pool['arg'] +
                                                  ' ' + parameters.data_pool['val']['pool0'],
                                                  parameters.rep_pool['val']['pool0'],
@@ -110,18 +113,18 @@ if __name__ == "__main__":
 
     # Image-meta set
     exec_cmd('rbd image-meta set {}/mvimg{} conf_rbd_cache false'
-             .format(parameters.rep_pool['val']['pool1'], index))
+             .format(parameters.rep_pool['val']['pool1'], index1))
 
     # Image-meta list
     exec_cmd('rbd image-meta list {}/mvimg{}'.format(parameters.rep_pool['val']['pool1'], index))
 
     # Image-meta get
     exec_cmd('rbd image-meta get {}/mvimg{} conf_rbd_cache'
-             .format(parameters.rep_pool['val']['pool1'], index))
+             .format(parameters.rep_pool['val']['pool1'], index1))
 
     # Image-meta Removing
     exec_cmd('rbd image-meta remove {}/mvimg{} conf_rbd_cache'
-             .format(parameters.rep_pool['val']['pool1'], index))
+             .format(parameters.rep_pool['val']['pool1'], index1))
 
     # Listing Images In the Pool
     [exec_cmd('rbd ls -l {}'.format(parameters.rep_pool['val'][key]))
@@ -138,7 +141,7 @@ if __name__ == "__main__":
         [exec_cmd('rbd trash mv {}/img{}'.format(parameters.rep_pool['val']['pool0'],
                                                  iterator))
          for iterator in range(iterator, iterator - 11, -1)]
-        exec_cmd('rbd trash mv {}/mvimg{}'.format(parameters.rep_pool['val']['pool1'], index))
+        exec_cmd('rbd trash mv {}/mvimg{}'.format(parameters.rep_pool['val']['pool1'], index1))
 
         # Listing trash entries
         if exec_cmd('rbd trash ls {}'.format(parameters.rep_pool['val']['pool0'])):
