@@ -13,10 +13,14 @@ FAILED_COMMANDS = []
 
 def exec_cmd(args):
     rc = cli.rbd.exec_cmd(args)
+    log.info("harish")
+    log.info(args)
     if rc is False:
+        log.info('Harish failed')
         globals()['FAILED_COUNT'] += 1
         FAILED_COMMANDS.append(args)
     else:
+        log.info('Harish passed')
         globals()['PASSED_COUNT'] += 1
     return rc
 
