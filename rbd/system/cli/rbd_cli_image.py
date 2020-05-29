@@ -5,21 +5,21 @@ import argparse
 import json
 import parameters
 import utils.log as log
+import itertools
 
 FAILED_COUNT = 0
 PASSED_COUNT = 0
 FAILED_COMMANDS = []
-
+PASSED_COMMANDS = []
 
 def exec_cmd(args):
-    log.info('hary1')
-    log.info(args)
     rc = cli.rbd.exec_cmd(args)
     if rc is False:
         globals()['FAILED_COUNT'] += 1
         FAILED_COMMANDS.append(args)
     else:
         globals()['PASSED_COUNT'] += 1
+        PASSED_COMMANDS.append(args)
     return rc
 
 
@@ -35,7 +35,6 @@ if __name__ == "__main__":
     combinations = cli.generate_combinations('image_size', 'image_format')
     combinations = filter(lambda val: cli.search_param_val('-s', val)
                           .find('M') != -1, combinations)
-    combinations = list(combinations)
     [exec_cmd('rbd create {} {}/img{}'.format(param, parameters.rep_pool['val']['pool0'],
                                               iterator))
      for iterator, param in enumerate(combinations, start=0)]
@@ -52,20 +51,19 @@ if __name__ == "__main__":
                     cli.search_param_val('--stripe-unit', val) == 0)]
         map(lambda val: combinations.remove(val), invalid)
 
-    combinations = filter(
+    combinations = list(filter(
         lambda val: cli.search_param_val('--stripe-unit', val) == 0 or
         (cli.get_byte_size(cli.search_param_val('--stripe-unit', val)) <=
          cli.get_byte_size(cli.search_param_val('--object-size', val))),
-        combinations)
-    combinations = list(combinations)
-    iterator = 0
+        combinations))
     [exec_cmd('rbd create {} {} {}/img{}'.format(param, parameters.data_pool['arg'] +
                                                  ' ' + parameters.data_pool['val']['pool0'],
                                                  parameters.rep_pool['val']['pool0'],
                                                  iterator))
-     for iterator, param in enumerate(combinations, start=iterator + 1)]
+     for iterator, param in enumerate(combinations, start=1)]
 
     # Feature Disable & Enable and Object-map rebuild
+    iterator = 0
     image_feature = ['layering', 'striping', 'fast-diff', 'object-map',
                      'deep-flatten', 'journaling', 'exclusive-lock']
 
@@ -112,25 +110,27 @@ if __name__ == "__main__":
      for index, param in enumerate(combinations, start=0)]
 
     # Image-meta set
+    index = 0
     exec_cmd('rbd image-meta set {}/mvimg{} conf_rbd_cache false'
-             .format(parameters.rep_pool['val']['pool1'], index1))
+             .format(parameters.rep_pool['val']['pool1'], index))
 
     # Image-meta list
     exec_cmd('rbd image-meta list {}/mvimg{}'.format(parameters.rep_pool['val']['pool1'], index))
 
     # Image-meta get
     exec_cmd('rbd image-meta get {}/mvimg{} conf_rbd_cache'
-             .format(parameters.rep_pool['val']['pool1'], index1))
+             .format(parameters.rep_pool['val']['pool1'], index))
 
     # Image-meta Removing
     exec_cmd('rbd image-meta remove {}/mvimg{} conf_rbd_cache'
-             .format(parameters.rep_pool['val']['pool1'], index1))
+             .format(parameters.rep_pool['val']['pool1'], index))
 
     # Listing Images In the Pool
     [exec_cmd('rbd ls -l {}'.format(parameters.rep_pool['val'][key]))
-     for key, val in parameters.rep_pool['val'].iteritems()]
+     for key, val in parameters.rep_pool['val'].items()]
 
     # Image Info
+    iterator = 0
     exec_cmd('rbd info {}/img{}'.format(parameters.rep_pool['val']['pool0'], iterator))
 
     # Image Status
@@ -141,7 +141,7 @@ if __name__ == "__main__":
         [exec_cmd('rbd trash mv {}/img{}'.format(parameters.rep_pool['val']['pool0'],
                                                  iterator))
          for iterator in range(iterator, iterator - 11, -1)]
-        exec_cmd('rbd trash mv {}/mvimg{}'.format(parameters.rep_pool['val']['pool1'], index1))
+        exec_cmd('rbd trash mv {}/mvimg{}'.format(parameters.rep_pool['val']['pool1'], index))
 
         # Listing trash entries
         if exec_cmd('rbd trash ls {}'.format(parameters.rep_pool['val']['pool0'])):
@@ -174,6 +174,8 @@ if __name__ == "__main__":
 
     if FAILED_COUNT > 0:
         [log.info(fc) for fc in FAILED_COMMANDS]
+        log.info('passed')
+        [log.info(fc) for fc in PASSED_COMMANDS]
         exit(1)
 
     exit(0)
