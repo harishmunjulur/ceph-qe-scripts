@@ -65,7 +65,7 @@ if __name__ == "__main__":
      for iterator, param in enumerate(combinations, start=1)]
 
     # Feature Disable & Enable and Object-map rebuild
-    iterator = 0
+    iterator = 1
     image_feature = ['layering', 'striping', 'fast-diff', 'object-map',
                      'deep-flatten', 'journaling', 'exclusive-lock']
 
