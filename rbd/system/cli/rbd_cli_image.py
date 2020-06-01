@@ -142,7 +142,7 @@ if __name__ == "__main__":
         # Moving Image to trash
         [exec_cmd('rbd trash move {}/img{}'.format(parameters.rep_pool['val']['pool0'],
                                                  iterator))
-         for iterator in range(iterator, iterator - 11, -1)]
+         for iterator in range(11)]
         exec_cmd('rbd trash move {}/mvimg{}'.format(parameters.rep_pool['val']['pool1'], index))
 
         # Listing trash entries
