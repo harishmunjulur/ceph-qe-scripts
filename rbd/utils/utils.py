@@ -12,6 +12,8 @@ class RbdUtils:
     def get_ceph_version(self):
         self.output = self.exec_cmd('ceph -v')
         self.output = int('.'.join(self.output.split()[2].split('.')[:1]))
+        log.info('ceph version is = ' )
+        log.info(self.output)
         if self.output == 10:
             return 2
         elif self.output == 12:
@@ -49,12 +51,16 @@ class RbdUtils:
         return self.temp_str
 
     def create_pool(self, **kw):
+        log.info('creating pool')
         self.exec_cmd(cmd='ceph osd pool create {} 64 64'
                       .format(kw.get('poolname')))
+        log.info(cmd='ceph osd pool create {} 64 64'.format(kw.get('poolname')))
         if self.ceph_version >= 3:
             self.exec_cmd(cmd='rbd pool init {}'.format(kw.get('poolname')))
+            log.info(cmd='rbd pool init {}'.format(kw.get('poolname')))
 
     def delete_pool(self, **kw):
+        log.info('deleting pool')
         self.exec_cmd('ceph osd pool delete {pool} {pool} --yes-i-really-really-mean-it'
                       .format(pool=kw.get('poolname')))
 
