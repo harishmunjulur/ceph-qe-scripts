@@ -140,10 +140,10 @@ if __name__ == "__main__":
 
     if cli.ceph_version > 2:
         # Moving Image to trash
-        [exec_cmd('rbd trash move {}/img{}'.format(parameters.rep_pool['val']['pool0'],
+        [exec_cmd('rbd trash mv {}/img{}'.format(parameters.rep_pool['val']['pool0'],
                                                  iterator))
-         for iterator in range(11)]
-        exec_cmd('rbd trash move {}/mvimg{}'.format(parameters.rep_pool['val']['pool1'], index))
+         for iterator in range(iterator, iterator - 11, -1)]
+        exec_cmd('rbd trash mv {}/mvimg{}'.format(parameters.rep_pool['val']['pool1'], index))
 
         # Listing trash entries
         if exec_cmd('rbd trash ls {}'.format(parameters.rep_pool['val']['pool0'])):
