@@ -52,12 +52,11 @@ class RbdUtils:
 
     def create_pool(self, **kw):
         log.info('creating pool')
+        log.info(kw.get('poolname'))
         self.exec_cmd(cmd='ceph osd pool create {} 64 64'
                       .format(kw.get('poolname')))
-        log.info(cmd='ceph osd pool create {} 64 64'.format(kw.get('poolname')))
         if self.ceph_version >= 3:
             self.exec_cmd(cmd='rbd pool init {}'.format(kw.get('poolname')))
-            log.info(cmd='rbd pool init {}'.format(kw.get('poolname')))
 
     def delete_pool(self, **kw):
         log.info('deleting pool')
