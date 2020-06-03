@@ -62,7 +62,7 @@ if __name__ == "__main__":
                                                  ' ' + parameters.data_pool['val']['pool0'],
                                                  parameters.rep_pool['val']['pool0'],
                                                  iterator))
-     for iterator, param in enumerate(combinations, start=1)]
+     for iterator, param in enumerate(combinations, start=2)]
 
     # Feature Disable & Enable and Object-map rebuild
     iterator = 1
