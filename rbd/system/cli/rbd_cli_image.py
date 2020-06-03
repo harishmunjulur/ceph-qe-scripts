@@ -101,7 +101,7 @@ if __name__ == "__main__":
     # Copy Images
     combinations = cli.generate_combinations('data_pool')
     [exec_cmd('rbd cp {}/img{} {} {}/cpimg{}'.format(parameters.rep_pool['val']['pool0'],
-                                                     iterator, param,
+                                                     iterator+2, param,
                                                      parameters.rep_pool['val']['pool1'], index))
      for index, param in enumerate(combinations, start=0)]
 
