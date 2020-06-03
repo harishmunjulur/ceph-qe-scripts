@@ -65,7 +65,7 @@ if __name__ == "__main__":
      for iterator, param in enumerate(combinations, start=2)]
 
     # Feature Disable & Enable and Object-map rebuild
-    iterator = 1
+    iterator = 500
     image_feature = ['layering', 'striping', 'fast-diff', 'object-map',
                      'deep-flatten', 'journaling', 'exclusive-lock']
 
@@ -74,7 +74,7 @@ if __name__ == "__main__":
               'striping,exclusive-lock,object-map,fast-diff,deep-flatten,'
               'journaling {} {}/img{}'.format(parameters.data_pool['arg'] + ' ' + parameters.data_pool['val']['pool0'],
                                               parameters.rep_pool['val']['pool0'], iterator))
-     for iterator in range(iterator + 501, iterator + 503)]
+     for iterator in range(iterator + 1, iterator + 3)]
     [exec_cmd('rbd feature disable {}/img{} {}'
               .format(parameters.rep_pool['val']['pool0'], iterator, val))
      for val in image_feature if 'layering' not in val and 'striping' not in val
