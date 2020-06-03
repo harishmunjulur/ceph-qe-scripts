@@ -76,7 +76,7 @@ if __name__ == "__main__":
                                               parameters.rep_pool['val']['pool0'], iterator))
      for iterator in range(iterator + 1, iterator + 3)]
     [exec_cmd('rbd feature disable {}/img{} {}'
-              .format(parameters.rep_pool['val']['pool0'], iterator, val))
+              .format(parameters.rep_pool['val']['pool0'], iterator+2, val))
      for val in image_feature if 'layering' not in val and 'striping' not in val
      ]
 
@@ -84,14 +84,14 @@ if __name__ == "__main__":
         if 'deep-flatten' not in val and 'layering' not in val \
                 and 'striping' not in val:
             exec_cmd('rbd feature enable {}/img{} {}'
-                     .format(parameters.rep_pool['val']['pool0'], iterator, val))
+                     .format(parameters.rep_pool['val']['pool0'], iterator+2, val))
             if 'fast-diff' in str(val) or 'object-map' in str(val):
                 exec_cmd('rbd object-map rebuild {}/img{}'
-                         .format(parameters.rep_pool['val']['pool0'], iterator))
+                         .format(parameters.rep_pool['val']['pool0'], iterator+2))
 
     # Resize
     combinations = cli.generate_combinations('image_resize')
-    [exec_cmd('rbd resize {} {}'.format(param, parameters.rep_pool['val']['pool0'] + '/img' + str(iterator)))
+    [exec_cmd('rbd resize {} {}'.format(param, parameters.rep_pool['val']['pool0'] + '/img' + str(iterator+2)))
      for param in combinations]
 
     # Images Deletion
