@@ -133,10 +133,10 @@ if __name__ == "__main__":
 
     # Image Info
     iterator = 0
-    exec_cmd('rbd info {}/img{}'.format(parameters.rep_pool['val']['pool0'], iterator))
+    exec_cmd('rbd info {}/img{}'.format(parameters.rep_pool['val']['pool0'], iterator+2))
 
     # Image Status
-    exec_cmd('rbd status {}/img{}'.format(parameters.rep_pool['val']['pool0'], iterator))
+    exec_cmd('rbd status {}/img{}'.format(parameters.rep_pool['val']['pool0'], iterator+2))
 
     if cli.ceph_version > 2:
         # Moving Image to trash
