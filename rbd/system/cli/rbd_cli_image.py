@@ -13,6 +13,7 @@ FAILED_COMMANDS = []
 
 def exec_cmd(args):
     rc = cli.rbd.exec_cmd(args)
+    log.info(args)
     if rc is False:
         globals()['FAILED_COUNT'] += 1
         FAILED_COMMANDS.append(args)
