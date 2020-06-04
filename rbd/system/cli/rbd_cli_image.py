@@ -153,8 +153,6 @@ if __name__ == "__main__":
                                               .format(parameters.rep_pool['val']['pool0'])
                                               ))
             for num in range(0, len(json_output[num]), 2):
-                log.info(len(json_output[num])
-                log.info(json_output[num])
                 exec_cmd('rbd trash restore {}/{}'
                          .format(parameters.rep_pool['val']['pool0'], json_output[num][id]))
 
