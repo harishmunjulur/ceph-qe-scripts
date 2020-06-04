@@ -152,9 +152,11 @@ if __name__ == "__main__":
             json_output = json.loads(exec_cmd('rbd trash ls {} --format=json'
                                               .format(parameters.rep_pool['val']['pool0'])
                                               ))
-            for num in range(0, 18, 2):
+            for num in range(0, len(json_output[num]), 2):
+                log.info(len(json_output[num])
+                log.info(json_output[num])
                 exec_cmd('rbd trash restore {}/{}'
-                         .format(parameters.rep_pool['val']['pool0'], json_output[num]))
+                         .format(parameters.rep_pool['val']['pool0'], json_output[num][id]))
 
         # Removing image from trash
         if exec_cmd('rbd trash ls {}'.format(parameters.rep_pool['val']['pool1'])):
