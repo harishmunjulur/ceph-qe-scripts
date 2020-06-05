@@ -112,7 +112,7 @@ if __name__ == "__main__":
      for index, param in enumerate(combinations, start=0)]
 
     # Image-meta set
-    index = 500
+    index = 502
     exec_cmd('rbd image-meta set {}/mvimg{} conf_rbd_cache false'
              .format(parameters.rep_pool['val']['pool1'], index))
 
@@ -132,7 +132,6 @@ if __name__ == "__main__":
      for key, val in parameters.rep_pool['val'].items()]
 
     # Image Info
-    iterator = 0
     exec_cmd('rbd info {}/img{}'.format(parameters.rep_pool['val']['pool0'], iterator+2))
 
     # Image Status
@@ -154,7 +153,7 @@ if __name__ == "__main__":
                                               ))
             for num in range(0, len(json_output), 2):
                 exec_cmd('rbd trash restore {}/{}'
-                         .format(parameters.rep_pool['val']['pool0'], json_output[num]))
+                         .format(parameters.rep_pool['val']['pool0'], json_output[num]['id']))
 
         # Removing image from trash
         if exec_cmd('rbd trash ls {}'.format(parameters.rep_pool['val']['pool1'])):
