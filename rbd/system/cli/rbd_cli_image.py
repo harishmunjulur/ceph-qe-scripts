@@ -112,7 +112,7 @@ if __name__ == "__main__":
      for index, param in enumerate(combinations, start=0)]
 
     # Image-meta set
-    index = 502
+    index = 0
     exec_cmd('rbd image-meta set {}/mvimg{} conf_rbd_cache false'
              .format(parameters.rep_pool['val']['pool1'], index))
 
