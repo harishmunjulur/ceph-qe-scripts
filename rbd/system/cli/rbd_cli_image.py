@@ -161,7 +161,7 @@ if __name__ == "__main__":
                                               .format(parameters.rep_pool['val']['pool1'])
                                               ))
             exec_cmd('rbd trash remove {}/{}'
-                     .format(parameters.rep_pool['val']['pool1'], json_output[0]))
+                     .format(parameters.rep_pool['val']['pool1'], json_output[0]['id]))
 
     # Clean Up
     cli.rbd.clean_up(pools=parameters.rep_pool['val'])
