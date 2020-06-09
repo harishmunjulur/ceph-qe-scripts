@@ -152,16 +152,24 @@ if __name__ == "__main__":
                                               .format(parameters.rep_pool['val']['pool0'])
                                               ))
             for num in range(0, len(json_output), 2):
-                exec_cmd('rbd trash restore {}/{}'
-                         .format(parameters.rep_pool['val']['pool0'], json_output[num]['id']))
+                if cli.ceph_version == 3:
+                    exec_cmd('rbd trash restore {}/{}'
+                             .format(parameters.rep_pool['val']['pool0'], json_output[num]))
+                else:
+                    exec_cmd('rbd trash restore {}/{}'
+                             .format(parameters.rep_pool['val']['pool0'], json_output[num]['id']))
 
         # Removing image from trash
         if exec_cmd('rbd trash ls {}'.format(parameters.rep_pool['val']['pool1'])):
             json_output = json.loads(exec_cmd('rbd trash ls {} --format=json'
                                               .format(parameters.rep_pool['val']['pool1'])
                                               ))
-            exec_cmd('rbd trash remove {}/{}'
-                     .format(parameters.rep_pool['val']['pool1'], json_output[0]['id']))
+            if cli.ceph_version == 3:
+                exec_cmd('rbd trash remove {}/{}'
+                         .format(parameters.rep_pool['val']['pool1'], json_output[0]))
+            else:
+                exec_cmd('rbd trash remove {}/{}'
+                         .format(parameters.rep_pool['val']['pool1'], json_output[0]['id']))
 
     # Clean Up
     cli.rbd.clean_up(pools=parameters.rep_pool['val'])
