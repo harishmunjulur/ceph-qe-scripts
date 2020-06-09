@@ -67,7 +67,7 @@ if __name__ == "__main__":
     # Feature Disable & Enable and Object-map rebuild
     iterator = 500
     image_feature = ['layering', 'striping', 'fast-diff',
-                     'deep-flatten', 'exclusive-lock', 'journaling']
+                     'deep-flatten', 'journaling', 'exclusive-lock']
 
     [exec_cmd('rbd create -s 10G --object-size 32M --stripe-unit 16777216 '
               '--stripe-count 16 --image-feature layering,'
