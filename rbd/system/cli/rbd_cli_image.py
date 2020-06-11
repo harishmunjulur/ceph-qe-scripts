@@ -58,6 +58,7 @@ if __name__ == "__main__":
         (cli.get_byte_size(cli.search_param_val('--stripe-unit', val)) <=
          cli.get_byte_size(cli.search_param_val('--object-size', val))),
         combinations))
+    len_combinations = len(combinations)
     [exec_cmd('rbd create {} {} {}/img{}'.format(param, parameters.data_pool['arg'] +
                                                  ' ' + parameters.data_pool['val']['pool0'],
                                                  parameters.rep_pool['val']['pool0'],
@@ -66,7 +67,10 @@ if __name__ == "__main__":
 
     # Feature Disable & Enable and Object-map rebuild
     iterator = 500
-    image_feature = ['layering', 'striping', 'fast-diff', 'object-map',
+    image_feature_v3 = ['layering', 'striping', 'fast-diff', 'object-map',
+                     'deep-flatten', 'journaling', 'exclusive-lock']
+    
+    image_feature_v4 = ['layering', 'striping', 'fast-diff',
                      'deep-flatten', 'journaling', 'exclusive-lock']
 
     [exec_cmd('rbd create -s 10G --object-size 32M --stripe-unit 16777216 '
@@ -75,6 +79,12 @@ if __name__ == "__main__":
               'journaling {} {}/img{}'.format(parameters.data_pool['arg'] + ' ' + parameters.data_pool['val']['pool0'],
                                               parameters.rep_pool['val']['pool0'], iterator))
      for iterator in range(iterator + 1, iterator + 3)]
+    
+    if cli.ceph_version == 3:
+        image_feature = image_feature_v3
+    else:
+        image_feature = image_feature_v4
+         
     [exec_cmd('rbd feature disable {}/img{} {}'
               .format(parameters.rep_pool['val']['pool0'], iterator+2, val))
      for val in image_feature if 'layering' not in val and 'striping' not in val
@@ -141,7 +151,7 @@ if __name__ == "__main__":
         # Moving Image to trash
         [exec_cmd('rbd trash mv {}/img{}'.format(parameters.rep_pool['val']['pool0'],
                                                  iterator))
-         for iterator in range(181, 170, -1)]
+         for iterator in range(len_combinations, len_combinations-11, -1)]
         exec_cmd('rbd trash mv {}/mvimg{}'.format(parameters.rep_pool['val']['pool1'], index))
 
         # Listing trash entries
